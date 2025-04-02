@@ -1,0 +1,2399 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكواد برمجية - Coding Pro Max</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --darker: #1e272e;
+            --light: #f5f6fa;
+            --lighter: #ffffff;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --code-bg: #1e1e1e;
+            --code-header: #252526;
+            --code-tab: #2d2d2d;
+            --code-tab-active: #1e1e1e;
+            --code-line: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(108, 92, 231, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(162, 155, 254, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            right: 25%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .channel-link {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-top: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        .channel-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .channel-link i {
+            margin-left: 5px;
+        }
+
+        .code-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .code-card {
+            background: var(--dark);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header {
+            background: var(--code-header);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--light);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .card-preview {
+            padding: 1.5rem;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-tabs {
+            display: flex;
+            background: var(--code-header);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-tab {
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            background: var(--code-tab);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-tab:last-child {
+            border-right: none;
+        }
+
+        .code-tab.active {
+            background: var(--code-tab-active);
+            color: var(--light);
+            font-weight: bold;
+        }
+
+        .code-content {
+            position: relative;
+        }
+
+        .code-block {
+            display: none;
+            background: var(--code-bg);
+            padding: 1rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.85rem;
+            white-space: pre;
+            overflow-x: auto;
+            max-height: 300px;
+            color: #f8f8f2;
+            line-height: 1.5;
+            counter-reset: line;
+        }
+
+        .code-block.active {
+            display: block;
+        }
+
+        .code-block::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .code-block::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .code-block::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .code-line {
+            display: block;
+            position: relative;
+            padding-left: 3.5em;
+            margin-bottom: 0.2em;
+        }
+
+        .code-line::before {
+            counter-increment: line;
+            content: counter(line);
+            position: absolute;
+            left: 0.5em;
+            color: #6e7681;
+            width: 2.5em;
+            text-align: right;
+            user-select: none;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                url('https://i.postimg.cc/8zhWHgJn/1000018824.png'),
+                url('https://i.postimg.cc/CM9ggzJX/UI-Code-with-HTML-CSS-JS-20250402-054324.png');
+            background-size: 300px, 500px;
+            background-position: -50px -50px, calc(100% + 100px) calc(100% + 100px);
+            background-repeat: no-repeat;
+            opacity: 0.05;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .code-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        .copied-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copied-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* أنماط الأكواد الداخلية */
+        /* كود 1: تبديل الوضع الليلي/النهاري */
+        #code1 .app {
+            width: 100%;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #code1 .phone {
+            position: relative;
+            z-index: 2;
+            width: 18rem;
+            height: 17rem;
+            background-color: white;
+            box-shadow: 0 4px 35px rgba(0,0,0,.1);
+            border-radius: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #code1 .menu {
+            font-size: 80%;
+            opacity: .4;
+            padding: .8rem 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #code1 .icons {
+            display: flex;
+            margin-top: .5rem;
+        }
+
+        #code1 .battery {
+            width: .85rem;
+            height: .45rem;
+            background-color: black;
+        }
+
+        #code1 .network {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 6.8px 7.2px 6.8px;
+            border-color: transparent transparent black transparent;
+            transform: rotate(135deg);
+            margin: .12rem .5rem;
+        }
+
+        #code1 .content {
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+            text-align: center;
+            width: 70%;
+            transform: translateY(5%);
+        }
+
+        #code1 .circle {
+            position: relative;
+            border-radius: 100%;
+            width: 8rem;
+            height: 8rem;
+            background: linear-gradient(40deg, #FF0080,#FF8C00 70%);
+            margin: auto;
+        }
+
+        #code1 .crescent {
+            position: absolute;
+            border-radius: 100%;
+            right: 0;
+            width: 6rem;
+            height: 6rem;
+            background: white;
+            transform: scale(0);
+            transform-origin: top right;
+            transition: transform .6s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        #code1 label, #code1 .toggle {
+            height: 2.8rem;
+            border-radius: 100px;
+        }
+
+        #code1 label {
+            width: 100%;
+            background-color: rgba(0,0,0,.1);
+            border-radius: 100px;
+            position: relative;
+            margin: 1.8rem 0 4rem 0;
+            cursor: pointer;
+        }
+
+        #code1 .toggle {
+            position: absolute;
+            width: 50%;
+            background-color: #fff;
+            box-shadow: 0 2px 15px rgba(0,0,0,.15);
+            transition: transform .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        #code1 .names {
+            font-size: 90%;
+            font-weight: bolder;
+            color: black;
+            width: 65%;
+            margin-left: 17.5%;
+            margin-top: 6.5%;
+            position: absolute;
+            display: flex;
+            justify-content: space-between;
+            user-select: none;
+        }
+
+        #code1 .dark {
+            opacity: .5;
+        }
+
+        #code1 [type="checkbox"] {
+            display: none;
+        }
+
+        #code1 [type="checkbox"]:checked + .app .toggle {
+            transform: translateX(100%);
+            background-color: #34323D;
+        }
+
+        #code1 [type="checkbox"]:checked + .app .dark {
+            opacity: 1;
+            color: white;
+        }
+
+        #code1 [type="checkbox"]:checked + .app .light {
+            opacity: 1;
+            color: white;
+        }
+
+        #code1 [type="checkbox"]:checked + .app .body {
+            background-color: #26242E;
+            color: white;
+        }
+
+        #code1 [type="checkbox"]:checked + .app .crescent {
+            transform: scale(1);
+            background: #26242E;
+        }
+
+        #code1 [type="checkbox"]:checked + .app .circle {
+            background: linear-gradient(40deg, #8983F7, #A3DAFB 70%);
+        }
+
+        #code1 [type="checkbox"]:checked + .app .body .phone .menu .time {
+            color: white;
+        }
+
+        #code1 [type="checkbox"]:checked + .app .body .phone .menu .icons .network {
+            border-color: transparent transparent white transparent;
+        }
+
+        #code1 [type="checkbox"]:checked + .app .body .phone .menu .icons .battery {
+            background-color: white;
+        }
+
+        /* كود 2: زر بآثار نصية */
+        #code2 .button {
+            margin: 0;
+            height: auto;
+            background: transparent;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+        }
+
+        #code2 .button {
+            --border-right: 6px;
+            --text-stroke-color: rgba(255,255,255,0.6);
+            --animation-color: #37FF8B;
+            --fs-size: 2em;
+            letter-spacing: 3px;
+            text-decoration: none;
+            font-size: var(--fs-size);
+            font-family: "Arial";
+            position: relative;
+            text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--text-stroke-color);
+        }
+
+        #code2 .hover-text {
+            position: absolute;
+            box-sizing: border-box;
+            content: attr(data-text);
+            color: var(--animation-color);
+            width: 0%;
+            inset: 0;
+            border-right: var(--border-right) solid var(--animation-color);
+            overflow: hidden;
+            transition: 0.5s;
+            -webkit-text-stroke: 1px var(--animation-color);
+        }
+
+        #code2 .button:hover .hover-text {
+            width: 100%;
+            filter: drop-shadow(0 0 23px var(--animation-color))
+        }
+
+        /* كود 3: زر متحرك مع أيقونة */
+        #code3 button {
+            font-family: inherit;
+            font-size: 20px;
+            background: royalblue;
+            color: white;
+            padding: 0.7em 1em;
+            padding-left: 0.9em;
+            display: flex;
+            align-items: center;
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        #code3 button span {
+            display: block;
+            margin-left: 0.3em;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #code3 button svg {
+            display: block;
+            transform-origin: center center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #code3 button:hover .svg-wrapper {
+            animation: fly-1 0.6s ease-in-out infinite alternate;
+        }
+
+        #code3 button:hover svg {
+            transform: translateX(1.2em) rotate(45deg) scale(1.1);
+        }
+
+        #code3 button:hover span {
+            transform: translateX(5em);
+        }
+
+        #code3 button:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes fly-1 {
+            from {
+                transform: translateY(0.1em);
+            }
+            to {
+                transform: translateY(-0.1em);
+            }
+        }
+
+        /* كود 4: هامستر في عجلة دوارة */
+        #code4 .wheel-and-hamster {
+            --dur: 1s;
+            position: relative;
+            width: 12em;
+            height: 12em;
+            font-size: 14px;
+        }
+
+        #code4 .wheel,
+        #code4 .hamster,
+        #code4 .hamster div,
+        #code4 .spoke {
+            position: absolute;
+        }
+
+        #code4 .wheel,
+        #code4 .spoke {
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #code4 .wheel {
+            background: radial-gradient(100% 100% at center,hsla(0,0%,60%,0) 47.8%,hsl(0,0%,60%) 48%);
+            z-index: 2;
+        }
+
+        #code4 .hamster {
+            animation: hamster var(--dur) ease-in-out infinite;
+            top: 50%;
+            left: calc(50% - 3.5em);
+            width: 7em;
+            height: 3.75em;
+            transform: rotate(4deg) translate(-0.8em,1.85em);
+            transform-origin: 50% 0;
+            z-index: 1;
+        }
+
+        #code4 .hamster__head {
+            animation: hamsterHead var(--dur) ease-in-out infinite;
+            background: hsl(30,90%,55%);
+            border-radius: 70% 30% 0 100% / 40% 25% 25% 60%;
+            box-shadow: 0 -0.25em 0 hsl(30,90%,80%) inset,
+                0.75em -1.55em 0 hsl(30,90%,90%) inset;
+            top: 0;
+            left: -2em;
+            width: 2.75em;
+            height: 2.5em;
+            transform-origin: 100% 50%;
+        }
+
+        #code4 .hamster__ear {
+            animation: hamsterEar var(--dur) ease-in-out infinite;
+            background: hsl(0,90%,85%);
+            border-radius: 50%;
+            box-shadow: -0.25em 0 hsl(30,90%,55%) inset;
+            top: -0.25em;
+            right: -0.25em;
+            width: 0.75em;
+            height: 0.75em;
+            transform-origin: 50% 75%;
+        }
+
+        #code4 .hamster__eye {
+            animation: hamsterEye var(--dur) linear infinite;
+            background-color: hsl(0,0%,0%);
+            border-radius: 50%;
+            top: 0.375em;
+            left: 1.25em;
+            width: 0.5em;
+            height: 0.5em;
+        }
+
+        #code4 .hamster__nose {
+            background: hsl(0,90%,75%);
+            border-radius: 35% 65% 85% 15% / 70% 50% 50% 30%;
+            top: 0.75em;
+            left: 0;
+            width: 0.2em;
+            height: 0.25em;
+        }
+
+        #code4 .hamster__body {
+            animation: hamsterBody var(--dur) ease-in-out infinite;
+            background: hsl(30,90%,90%);
+            border-radius: 50% 30% 50% 30% / 15% 60% 40% 40%;
+            box-shadow: 0.1em 0.75em 0 hsl(30,90%,55%) inset,
+                0.15em -0.5em 0 hsl(30,90%,80%) inset;
+            top: 0.25em;
+            left: 2em;
+            width: 4.5em;
+            height: 3em;
+            transform-origin: 17% 50%;
+            transform-style: preserve-3d;
+        }
+
+        #code4 .hamster__limb--fr,
+        #code4 .hamster__limb--fl {
+            clip-path: polygon(0 0,100% 0,70% 80%,60% 100%,0% 100%,40% 80%);
+            top: 2em;
+            left: 0.5em;
+            width: 1em;
+            height: 1.5em;
+            transform-origin: 50% 0;
+        }
+
+        #code4 .hamster__limb--fr {
+            animation: hamsterFRLimb var(--dur) linear infinite;
+            background: linear-gradient(hsl(30,90%,80%) 80%,hsl(0,90%,75%) 80%);
+            transform: rotate(15deg) translateZ(-1px);
+        }
+
+        #code4 .hamster__limb--fl {
+            animation: hamsterFLLimb var(--dur) linear infinite;
+            background: linear-gradient(hsl(30,90%,90%) 80%,hsl(0,90%,85%) 80%);
+            transform: rotate(15deg);
+        }
+
+        #code4 .hamster__limb--br,
+        #code4 .hamster__limb--bl {
+            border-radius: 0.75em 0.75em 0 0;
+            clip-path: polygon(0 0,100% 0,100% 30%,70% 90%,70% 100%,30% 100%,40% 90%,0% 30%);
+            top: 1em;
+            left: 2.8em;
+            width: 1.5em;
+            height: 2.5em;
+            transform-origin: 50% 30%;
+        }
+
+        #code4 .hamster__limb--br {
+            animation: hamsterBRLimb var(--dur) linear infinite;
+            background: linear-gradient(hsl(30,90%,80%) 90%,hsl(0,90%,75%) 90%);
+            transform: rotate(-25deg) translateZ(-1px);
+        }
+
+        #code4 .hamster__limb--bl {
+            animation: hamsterBLLimb var(--dur) linear infinite;
+            background: linear-gradient(hsl(30,90%,90%) 90%,hsl(0,90%,85%) 90%);
+            transform: rotate(-25deg);
+        }
+
+        #code4 .hamster__tail {
+            animation: hamsterTail var(--dur) linear infinite;
+            background: hsl(0,90%,85%);
+            border-radius: 0.25em 50% 50% 0.25em;
+            box-shadow: 0 -0.2em 0 hsl(0,90%,75%) inset;
+            top: 1.5em;
+            right: -0.5em;
+            width: 1em;
+            height: 0.5em;
+            transform: rotate(30deg) translateZ(-1px);
+            transform-origin: 0.25em 0.25em;
+        }
+
+        #code4 .spoke {
+            animation: spoke var(--dur) linear infinite;
+            background: radial-gradient(100% 100% at center,hsl(0,0%,60%) 4.8%,hsla(0,0%,60%,0) 5%),
+                linear-gradient(hsla(0,0%,55%,0) 46.9%,hsl(0,0%,65%) 47% 52.9%,hsla(0,0%,65%,0) 53%) 50% 50% / 99% 99% no-repeat;
+        }
+
+        /* Animations */
+        @keyframes hamster {
+            from, to {
+                transform: rotate(4deg) translate(-0.8em,1.85em);
+            }
+            50% {
+                transform: rotate(0) translate(-0.8em,1.85em);
+            }
+        }
+
+        @keyframes hamsterHead {
+            from, 25%, 50%, 75%, to {
+                transform: rotate(0);
+            }
+            12.5%, 37.5%, 62.5%, 87.5% {
+                transform: rotate(8deg);
+            }
+        }
+
+        @keyframes hamsterEye {
+            from, 90%, to {
+                transform: scaleY(1);
+            }
+            95% {
+                transform: scaleY(0);
+            }
+        }
+
+        @keyframes hamsterEar {
+            from, 25%, 50%, 75%, to {
+                transform: rotate(0);
+            }
+            12.5%, 37.5%, 62.5%, 87.5% {
+                transform: rotate(12deg);
+            }
+        }
+
+        @keyframes hamsterBody {
+            from, 25%, 50%, 75%, to {
+                transform: rotate(0);
+            }
+            12.5%, 37.5%, 62.5%, 87.5% {
+                transform: rotate(-2deg);
+            }
+        }
+
+        @keyframes hamsterFRLimb {
+            from, 25%, 50%, 75%, to {
+                transform: rotate(50deg) translateZ(-1px);
+            }
+            12.5%, 37.5%, 62.5%, 87.5% {
+                transform: rotate(-30deg) translateZ(-1px);
+            }
+        }
+
+        @keyframes hamsterFLLimb {
+            from, 25%, 50%, 75%, to {
+                transform: rotate(-30deg);
+            }
+            12.5%, 37.5%, 62.5%, 87.5% {
+                transform: rotate(50deg);
+            }
+        }
+
+        @keyframes hamsterBRLimb {
+            from, 25%, 50%, 75%, to {
+                transform: rotate(-60deg) translateZ(-1px);
+            }
+            12.5%, 37.5%, 62.5%, 87.5% {
+                transform: rotate(20deg) translateZ(-1px);
+            }
+        }
+
+        @keyframes hamsterBLLimb {
+            from, 25%, 50%, 75%, to {
+                transform: rotate(20deg);
+            }
+            12.5%, 37.5%, 62.5%, 87.5% {
+                transform: rotate(-60deg);
+            }
+        }
+
+        @keyframes hamsterTail {
+            from, 25%, 50%, 75%, to {
+                transform: rotate(30deg) translateZ(-1px);
+            }
+            12.5%, 37.5%, 62.5%, 87.5% {
+                transform: rotate(10deg) translateZ(-1px);
+            }
+        }
+
+        @keyframes spoke {
+            from {
+                transform: rotate(0);
+            }
+            to {
+                transform: rotate(-1turn);
+            }
+        }
+
+        /* كود 5: زر تعلم المزيد */
+        #code5 button {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            outline: none;
+            border: 0;
+            vertical-align: middle;
+            text-decoration: none;
+            background: transparent;
+            padding: 0;
+            font-size: inherit;
+            font-family: inherit;
+        }
+
+        #code5 button.learn-more {
+            width: 12rem;
+            height: auto;
+        }
+
+        #code5 button.learn-more .circle {
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: relative;
+            display: block;
+            margin: 0;
+            width: 3rem;
+            height: 3rem;
+            background: #282936;
+            border-radius: 1.625rem;
+        }
+
+        #code5 button.learn-more .circle .icon {
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            background: #fff;
+        }
+
+        #code5 button.learn-more .circle .icon.arrow {
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            left: 0.625rem;
+            width: 1.125rem;
+            height: 0.125rem;
+            background: none;
+        }
+
+        #code5 button.learn-more .circle .icon.arrow::before {
+            position: absolute;
+            content: "";
+            top: -0.29rem;
+            right: 0.0625rem;
+            width: 0.625rem;
+            height: 0.625rem;
+            border-top: 0.125rem solid #fff;
+            border-right: 0.125rem solid #fff;
+            transform: rotate(45deg);
+        }
+
+        #code5 button.learn-more .button-text {
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0.75rem 0;
+            margin: 0 0 0 1.85rem;
+            color: #282936;
+            font-weight: 700;
+            line-height: 1.6;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        #code5 button:hover .circle {
+            width: 100%;
+        }
+
+        #code5 button:hover .circle .icon.arrow {
+            background: #fff;
+            transform: translate(1rem, 0);
+        }
+
+        #code5 button:hover .button-text {
+            color: #fff;
+        }
+
+        /* كود 6: بطاقة بتأثيرات حركية */
+        #code6 .card {
+            position: relative;
+            width: 190px;
+            height: 254px;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            padding: 12px;
+            gap: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #code6 .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: -5px;
+            margin: auto;
+            width: 200px;
+            height: 264px;
+            border-radius: 10px;
+            background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100% );
+            z-index: -10;
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #code6 .card::after {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100% );
+            transform: translate3d(0, 0, 0) scale(0.95);
+            filter: blur(20px);
+        }
+
+        #code6 .heading {
+            font-size: 20px;
+            text-transform: capitalize;
+            font-weight: 700;
+        }
+
+        #code6 .card p:not(.heading) {
+            font-size: 14px;
+        }
+
+        #code6 .card p:last-child {
+            color: #e81cff;
+            font-weight: 600;
+        }
+
+        #code6 .card:hover::after {
+            filter: blur(30px);
+        }
+
+        #code6 .card:hover::before {
+            transform: rotate(-90deg) scaleX(1.34) scaleY(0.77);
+        }
+
+        /* كود 7: شريط تقدم متحرك */
+        #code7 .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #code7 .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            border-radius: 10px;
+            animation: progress 3s ease-in-out infinite;
+            background-size: 200% 100%;
+            animation-direction: alternate;
+        }
+
+        @keyframes progress {
+            0% {
+                width: 0%;
+                background-position: 0% 50%;
+            }
+            100% {
+                width: 100%;
+                background-position: 100% 50%;
+            }
+        }
+
+        /* كود 8: زر بحدود متحركة */
+        #code8 .border-button {
+            position: relative;
+            padding: 15px 30px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        #code8 .border-button::before,
+        #code8 .border-button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        #code8 .border-button::before {
+            top: 0;
+            left: 0;
+            transform: translateX(-100%);
+        }
+
+        #code8 .border-button::after {
+            bottom: 0;
+            right: 0;
+            transform: translateX(100%);
+        }
+
+        #code8 .border-button:hover::before,
+        #code8 .border-button:hover::after {
+            transform: translateX(0);
+        }
+
+        #code8 .border-button span::before,
+        #code8 .border-button span::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        #code8 .border-button span::before {
+            top: 0;
+            left: 0;
+            transform: translateY(-100%);
+        }
+
+        #code8 .border-button span::after {
+            bottom: 0;
+            right: 0;
+            transform: translateY(100%);
+        }
+
+        #code8 .border-button:hover span::before,
+        #code8 .border-button:hover span::after {
+            transform: translateY(0);
+        }
+
+        /* كود 9: تأثير كتابة نص */
+        #code9 .typing-effect {
+            font-size: 24px;
+            font-family: monospace;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid;
+            width: 0;
+            animation: typing 2s steps(20) forwards, blink 0.5s step-end infinite alternate;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent }
+        }
+
+        /* كود 10: زر ثلاثي الأبعاد */
+        #code10 .btn-3d {
+            position: relative;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background: #6c5ce7;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.3s;
+            box-shadow: 0 10px 0 #5649c0, 0 15px 20px rgba(0,0,0,0.3);
+        }
+
+        #code10 .btn-3d:active {
+            transform: translateY(5px);
+            box-shadow: 0 5px 0 #5649c0, 0 10px 15px rgba(0,0,0,0.3);
+        }
+
+        #code10 .btn-3d::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #5649c0;
+            border-radius: 5px;
+            top: 0;
+            left: 0;
+            transform: translateZ(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="container">
+        <header>
+            <img src="https://i.postimg.cc/8zhWHgJn/1000018824.png" alt="قناة Coding Pro Max" class="logo">
+            <h1>أكواد برمجية جاهزة</h1>
+            <p>مجموعة من الأكواد المميزة للويب مع إمكانية النسخ</p>
+            <a href="https://youtube.com/@coding-pro-max?si=S4Q28gfJEeQZHeK1" class="channel-link">
+                زيارة القناة <i class="fab fa-youtube"></i>
+            </a>
+        </header>
+
+        <div class="code-grid">
+            <!-- كود 1: تبديل الوضع الليلي/النهاري -->
+            <div class="code-card" id="code1">
+                <div class="card-header">
+                    <div class="card-title">1. تبديل الوضع الليلي/النهاري</div>
+                    <div class="card-actions">
+                        <button class="copy-btn" data-code="code1-html"><i class="far fa-copy"></i></button>
+                        <button class="copy-btn" data-code="code1-css"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="card-preview">
+                    <input id="switch" type="checkbox">
+                    <div class="app">
+                        <div class="body">
+                            <div class="phone">
+                                <div class="menu">
+                                    <div class="time">4:20</div>
+                                    <div class="icons">
+                                        <div class="network"></div>
+                                        <div class="battery"></div>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <div class="circle">
+                                        <div class="crescent"></div>
+                                    </div>
+                                    <label for="switch">
+                                        <div class="toggle"></div>
+                                        <div class="names">
+                                            <p class="light">Light</p>
+                                            <p class="dark">Dark</p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-tabs">
+                    <div class="code-tab active" data-tab="code1-html">HTML</div>
+                    <div class="code-tab" data-tab="code1-css">CSS</div>
+                </div>
+                <div class="code-content">
+                    <pre class="code-block active" id="code1-html"><span class="code-line">&lt;input id="switch" type="checkbox"&gt;</span>
+<span class="code-line">&lt;div class="app"&gt;</span>
+<span class="code-line">  &lt;div class="body"&gt;</span>
+<span class="code-line">    &lt;div class="phone"&gt;</span>
+<span class="code-line">      &lt;div class="menu"&gt;</span>
+<span class="code-line">        &lt;div class="time"&gt;4:20&lt;/div&gt;</span>
+<span class="code-line">        &lt;div class="icons"&gt;</span>
+<span class="code-line">          &lt;div class="network"&gt;&lt;/div&gt;</span>
+<span class="code-line">          &lt;div class="battery"&gt;&lt;/div&gt;</span>
+<span class="code-line">        &lt;/div&gt;</span>
+<span class="code-line">      &lt;/div&gt;</span>
+<span class="code-line">      &lt;div class="content"&gt;</span>
+<span class="code-line">        &lt;div class="circle"&gt;</span>
+<span class="code-line">          &lt;div class="crescent"&gt;&lt;/div&gt;</span>
+<span class="code-line">        &lt;/div&gt;</span>
+<span class="code-line">        &lt;label for="switch"&gt;</span>
+<span class="code-line">          &lt;div class="toggle"&gt;&lt;/div&gt;</span>
+<span class="code-line">          &lt;div class="names"&gt;</span>
+<span class="code-line">            &lt;p class="light"&gt;Light&lt;/p&gt;</span>
+<span class="code-line">            &lt;p class="dark"&gt;Dark&lt;/p&gt;</span>
+<span class="code-line">          &lt;/div&gt;</span>
+<span class="code-line">        &lt;/label&gt;</span>
+<span class="code-line">      &lt;/div&gt;</span>
+<span class="code-line">    &lt;/div&gt;</span>
+<span class="code-line">  &lt;/div&gt;</span>
+<span class="code-line">&lt;/div&gt;</span></pre>
+                    <pre class="code-block" id="code1-css"><span class="code-line">/* From Uiverse.io by Pradeepsaranbishnoi */</span>
+<span class="code-line">/* GENERAL */</span>
+<span class="code-line">.app {</span>
+<span class="code-line">  width: 100%;</span>
+<span class="code-line">  height: 300px;</span>
+<span class="code-line">  display: flex;</span>
+<span class="code-line">  justify-content: center;</span>
+<span class="code-line">  align-items: center;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.phone {</span>
+<span class="code-line">  position: relative;</span>
+<span class="code-line">  z-index: 2;</span>
+<span class="code-line">  width: 18rem;</span>
+<span class="code-line">  height: 17rem;</span>
+<span class="code-line">  background-color: white;</span>
+<span class="code-line">  box-shadow: 0 4px 35px rgba(0,0,0,.1);</span>
+<span class="code-line">  border-radius: 40px;</span>
+<span class="code-line">  display: flex;</span>
+<span class="code-line">  flex-direction: column;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.menu {</span>
+<span class="code-line">  font-size: 80%;</span>
+<span class="code-line">  opacity: .4;</span>
+<span class="code-line">  padding: .8rem 1.8rem;</span>
+<span class="code-line">  display: flex;</span>
+<span class="code-line">  justify-content: space-between;</span>
+<span class="code-line">  align-items: center;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.icons {</span>
+<span class="code-line">  display: flex;</span>
+<span class="code-line">  margin-top: .5rem;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.battery {</span>
+<span class="code-line">  width: .85rem;</span>
+<span class="code-line">  height: .45rem;</span>
+<span class="code-line">  background-color: black;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.network {</span>
+<span class="code-line">  width: 0;</span>
+<span class="code-line">  height: 0;</span>
+<span class="code-line">  border-style: solid;</span>
+<span class="code-line">  border-width: 0 6.8px 7.2px 6.8px;</span>
+<span class="code-line">  border-color: transparent transparent black transparent;</span>
+<span class="code-line">  transform: rotate(135deg);</span>
+<span class="code-line">  margin: .12rem .5rem;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.content {</span>
+<span class="code-line">  display: flex;</span>
+<span class="code-line">  flex-direction: column;</span>
+<span class="code-line">  margin: auto;</span>
+<span class="code-line">  text-align: center;</span>
+<span class="code-line">  width: 70%;</span>
+<span class="code-line">  transform: translateY(5%);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.circle {</span>
+<span class="code-line">  position: relative;</span>
+<span class="code-line">  border-radius: 100%;</span>
+<span class="code-line">  width: 8rem;</span>
+<span class="code-line">  height: 8rem;</span>
+<span class="code-line">  background: linear-gradient(40deg, #FF0080,#FF8C00 70%);</span>
+<span class="code-line">  margin: auto;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.crescent {</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  border-radius: 100%;</span>
+<span class="code-line">  right: 0;</span>
+<span class="code-line">  width: 6rem;</span>
+<span class="code-line">  height: 6rem;</span>
+<span class="code-line">  background: white;</span>
+<span class="code-line">  transform: scale(0);</span>
+<span class="code-line">  transform-origin: top right;</span>
+<span class="code-line">  transition: transform .6s cubic-bezier(0.645, 0.045, 0.355, 1);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">label, .toggle {</span>
+<span class="code-line">  height: 2.8rem;</span>
+<span class="code-line">  border-radius: 100px;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">label {</span>
+<span class="code-line">  width: 100%;</span>
+<span class="code-line">  background-color: rgba(0,0,0,.1);</span>
+<span class="code-line">  border-radius: 100px;</span>
+<span class="code-line">  position: relative;</span>
+<span class="code-line">  margin: 1.8rem 0 4rem 0;</span>
+<span class="code-line">  cursor: pointer;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.toggle {</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  width: 50%;</span>
+<span class="code-line">  background-color: #fff;</span>
+<span class="code-line">  box-shadow: 0 2px 15px rgba(0,0,0,.15);</span>
+<span class="code-line">  transition: transform .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.names {</span>
+<span class="code-line">  font-size: 90%;</span>
+<span class="code-line">  font-weight: bolder;</span>
+<span class="code-line">  color: black;</span>
+<span class="code-line">  width: 65%;</span>
+<span class="code-line">  margin-left: 17.5%;</span>
+<span class="code-line">  margin-top: 6.5%;</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  display: flex;</span>
+<span class="code-line">  justify-content: space-between;</span>
+<span class="code-line">  user-select: none;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.dark {</span>
+<span class="code-line">  opacity: .5;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">[type="checkbox"] {</span>
+<span class="code-line">  display: none;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">[type="checkbox"]:checked + .app .toggle {</span>
+<span class="code-line">  transform: translateX(100%);</span>
+<span class="code-line">  background-color: #34323D;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">[type="checkbox"]:checked + .app .dark {</span>
+<span class="code-line">  opacity: 1;</span>
+<span class="code-line">  color: white;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">[type="checkbox"]:checked + .app .light {</span>
+<span class="code-line">  opacity: 1;</span>
+<span class="code-line">  color: white;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">[type="checkbox"]:checked + .app .body {</span>
+<span class="code-line">  background-color: #26242E;</span>
+<span class="code-line">  color: white;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">[type="checkbox"]:checked + .app .crescent {</span>
+<span class="code-line">  transform: scale(1);</span>
+<span class="code-line">  background: #26242E;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">[type="checkbox"]:checked + .app .circle {</span>
+<span class="code-line">  background: linear-gradient(40deg, #8983F7, #A3DAFB 70%);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">[type="checkbox"]:checked + .app .body .phone .menu .time {</span>
+<span class="code-line">  color: white;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">[type="checkbox"]:checked + .app .body .phone .menu .icons .network {</span>
+<span class="code-line">  border-color: transparent transparent white transparent;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">[type="checkbox"]:checked + .app .body .phone .menu .icons .battery {</span>
+<span class="code-line">  background-color: white;</span>
+<span class="code-line">}</span></pre>
+                </div>
+            </div>
+
+            <!-- كود 2: زر بآثار نصية -->
+            <div class="code-card" id="code2">
+                <div class="card-header">
+                    <div class="card-title">2. زر بآثار نصية</div>
+                    <div class="card-actions">
+                        <button class="copy-btn" data-code="code2-html"><i class="far fa-copy"></i></button>
+                        <button class="copy-btn" data-code="code2-css"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="card-preview">
+                    <button class="button" data-text="Awesome">
+                        <span class="actual-text">&nbsp;uiverse&nbsp;</span>
+                        <span aria-hidden="true" class="hover-text">&nbsp;uiverse&nbsp;</span>
+                    </button>
+                </div>
+                <div class="code-tabs">
+                    <div class="code-tab active" data-tab="code2-html">HTML</div>
+                    <div class="code-tab" data-tab="code2-css">CSS</div>
+                </div>
+                <div class="code-content">
+                    <pre class="code-block active" id="code2-html"><span class="code-line">&lt;button class="button" data-text="Awesome"&gt;</span>
+<span class="code-line">    &lt;span class="actual-text"&gt;&amp;nbsp;uiverse&amp;nbsp;&lt;/span&gt;</span>
+<span class="code-line">    &lt;span aria-hidden="true" class="hover-text"&gt;&amp;nbsp;uiverse&amp;nbsp;&lt;/span&gt;</span>
+<span class="code-line">&lt;/button&gt;</span></pre>
+                    <pre class="code-block" id="code2-css"><span class="code-line">/* === removing default button style ===*/</span>
+<span class="code-line">.button {</span>
+<span class="code-line">  margin: 0;</span>
+<span class="code-line">  height: auto;</span>
+<span class="code-line">  background: transparent;</span>
+<span class="code-line">  padding: 0;</span>
+<span class="code-line">  border: none;</span>
+<span class="code-line">  cursor: pointer;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">/* button styling */</span>
+<span class="code-line">.button {</span>
+<span class="code-line">  --border-right: 6px;</span>
+<span class="code-line">  --text-stroke-color: rgba(255,255,255,0.6);</span>
+<span class="code-line">  --animation-color: #37FF8B;</span>
+<span class="code-line">  --fs-size: 2em;</span>
+<span class="code-line">  letter-spacing: 3px;</span>
+<span class="code-line">  text-decoration: none;</span>
+<span class="code-line">  font-size: var(--fs-size);</span>
+<span class="code-line">  font-family: "Arial";</span>
+<span class="code-line">  position: relative;</span>
+<span class="code-line">  text-transform: uppercase;</span>
+<span class="code-line">  color: transparent;</span>
+<span class="code-line">  -webkit-text-stroke: 1px var(--text-stroke-color);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">/* this is the text, when you hover on button */</span>
+<span class="code-line">.hover-text {</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  box-sizing: border-box;</span>
+<span class="code-line">  content: attr(data-text);</span>
+<span class="code-line">  color: var(--animation-color);</span>
+<span class="code-line">  width: 0%;</span>
+<span class="code-line">  inset: 0;</span>
+<span class="code-line">  border-right: var(--border-right) solid var(--animation-color);</span>
+<span class="code-line">  overflow: hidden;</span>
+<span class="code-line">  transition: 0.5s;</span>
+<span class="code-line">  -webkit-text-stroke: 1px var(--animation-color);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">/* hover */</span>
+<span class="code-line">.button:hover .hover-text {</span>
+<span class="code-line">  width: 100%;</span>
+<span class="code-line">  filter: drop-shadow(0 0 23px var(--animation-color))</span>
+<span class="code-line">}</span></pre>
+                </div>
+            </div>
+
+            <!-- كود 3: زر متحرك مع أيقونة -->
+            <div class="code-card" id="code3">
+                <div class="card-header">
+                    <div class="card-title">3. زر متحرك مع أيقونة</div>
+                    <div class="card-actions">
+                        <button class="copy-btn" data-code="code3-html"><i class="far fa-copy"></i></button>
+                        <button class="copy-btn" data-code="code3-css"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="card-preview">
+                    <button>
+                        <div class="svg-wrapper-1">
+                            <div class="svg-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                    <path fill="none" d="M0 0h24v24H0z"></path>
+                                    <path fill="currentColor" d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <span>Send</span>
+                    </button>
+                </div>
+                <div class="code-tabs">
+                    <div class="code-tab active" data-tab="code3-html">HTML</div>
+                    <div class="code-tab" data-tab="code3-css">CSS</div>
+                </div>
+                <div class="code-content">
+                    <pre class="code-block active" id="code3-html"><span class="code-line">&lt;button&gt;</span>
+<span class="code-line">  &lt;div class="svg-wrapper-1"&gt;</span>
+<span class="code-line">    &lt;div class="svg-wrapper"&gt;</span>
+<span class="code-line">      &lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"&gt;</span>
+<span class="code-line">        &lt;path fill="none" d="M0 0h24v24H0z"&gt;&lt;/path&gt;</span>
+<span class="code-line">        &lt;path fill="currentColor" d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"&gt;&lt;/path&gt;</span>
+<span class="code-line">      &lt;/svg&gt;</span>
+<span class="code-line">    &lt;/div&gt;</span>
+<span class="code-line">  &lt;/div&gt;</span>
+<span class="code-line">  &lt;span&gt;Send&lt;/span&gt;</span>
+<span class="code-line">&lt;/button&gt;</span></pre>
+                    <pre class="code-block" id="code3-css"><span class="code-line">button {</span>
+<span class="code-line">  font-family: inherit;</span>
+<span class="code-line">  font-size: 20px;</span>
+<span class="code-line">  background: royalblue;</span>
+<span class="code-line">  color: white;</span>
+<span class="code-line">  padding: 0.7em 1em;</span>
+<span class="code-line">  padding-left: 0.9em;</span>
+<span class="code-line">  display: flex;</span>
+<span class="code-line">  align-items: center;</span>
+<span class="code-line">  border: none;</span>
+<span class="code-line">  border-radius: 16px;</span>
+<span class="code-line">  overflow: hidden;</span>
+<span class="code-line">  transition: all 0.2s;</span>
+<span class="code-line">  cursor: pointer;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button span {</span>
+<span class="code-line">  display: block;</span>
+<span class="code-line">  margin-left: 0.3em;</span>
+<span class="code-line">  transition: all 0.3s ease-in-out;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button svg {</span>
+<span class="code-line">  display: block;</span>
+<span class="code-line">  transform-origin: center center;</span>
+<span class="code-line">  transition: transform 0.3s ease-in-out;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button:hover .svg-wrapper {</span>
+<span class="code-line">  animation: fly-1 0.6s ease-in-out infinite alternate;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button:hover svg {</span>
+<span class="code-line">  transform: translateX(1.2em) rotate(45deg) scale(1.1);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button:hover span {</span>
+<span class="code-line">  transform: translateX(5em);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button:active {</span>
+<span class="code-line">  transform: scale(0.95);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes fly-1 {</span>
+<span class="code-line">  from {</span>
+<span class="code-line">    transform: translateY(0.1em);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  to {</span>
+<span class="code-line">    transform: translateY(-0.1em);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span></pre>
+                </div>
+            </div>
+
+            <!-- كود 4: هامستر في عجلة دوارة -->
+            <div class="code-card" id="code4">
+                <div class="card-header">
+                    <div class="card-title">4. هامستر في عجلة دوارة</div>
+                    <div class="card-actions">
+                        <button class="copy-btn" data-code="code4-html"><i class="far fa-copy"></i></button>
+                        <button class="copy-btn" data-code="code4-css"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="card-preview">
+                    <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
+                        <div class="wheel"></div>
+                        <div class="hamster">
+                            <div class="hamster__body">
+                                <div class="hamster__head">
+                                    <div class="hamster__ear"></div>
+                                    <div class="hamster__eye"></div>
+                                    <div class="hamster__nose"></div>
+                                </div>
+                                <div class="hamster__limb hamster__limb--fr"></div>
+                                <div class="hamster__limb hamster__limb--fl"></div>
+                                <div class="hamster__limb hamster__limb--br"></div>
+                                <div class="hamster__limb hamster__limb--bl"></div>
+                                <div class="hamster__tail"></div>
+                            </div>
+                        </div>
+                        <div class="spoke"></div>
+                    </div>
+                </div>
+                <div class="code-tabs">
+                    <div class="code-tab active" data-tab="code4-html">HTML</div>
+                    <div class="code-tab" data-tab="code4-css">CSS</div>
+                </div>
+                <div class="code-content">
+                    <pre class="code-block active" id="code4-html"><span class="code-line">&lt;div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster"&gt;</span>
+<span class="code-line">  &lt;div class="wheel"&gt;&lt;/div&gt;</span>
+<span class="code-line">  &lt;div class="hamster"&gt;</span>
+<span class="code-line">    &lt;div class="hamster__body"&gt;</span>
+<span class="code-line">      &lt;div class="hamster__head"&gt;</span>
+<span class="code-line">        &lt;div class="hamster__ear"&gt;&lt;/div&gt;</span>
+<span class="code-line">        &lt;div class="hamster__eye"&gt;&lt;/div&gt;</span>
+<span class="code-line">        &lt;div class="hamster__nose"&gt;&lt;/div&gt;</span>
+<span class="code-line">      &lt;/div&gt;</span>
+<span class="code-line">      &lt;div class="hamster__limb hamster__limb--fr"&gt;&lt;/div&gt;</span>
+<span class="code-line">      &lt;div class="hamster__limb hamster__limb--fl"&gt;&lt;/div&gt;</span>
+<span class="code-line">      &lt;div class="hamster__limb hamster__limb--br"&gt;&lt;/div&gt;</span>
+<span class="code-line">      &lt;div class="hamster__limb hamster__limb--bl"&gt;&lt;/div&gt;</span>
+<span class="code-line">      &lt;div class="hamster__tail"&gt;&lt;/div&gt;</span>
+<span class="code-line">    &lt;/div&gt;</span>
+<span class="code-line">  &lt;/div&gt;</span>
+<span class="code-line">  &lt;div class="spoke"&gt;&lt;/div&gt;</span>
+<span class="code-line">&lt;/div&gt;</span></pre>
+                    <pre class="code-block" id="code4-css"><span class="code-line">.wheel-and-hamster {</span>
+<span class="code-line">  --dur: 1s;</span>
+<span class="code-line">  position: relative;</span>
+<span class="code-line">  width: 12em;</span>
+<span class="code-line">  height: 12em;</span>
+<span class="code-line">  font-size: 14px;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.wheel,</span>
+<span class="code-line">.hamster,</span>
+<span class="code-line">.hamster div,</span>
+<span class="code-line">.spoke {</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.wheel,</span>
+<span class="code-line">.spoke {</span>
+<span class="code-line">  border-radius: 50%;</span>
+<span class="code-line">  top: 0;</span>
+<span class="code-line">  left: 0;</span>
+<span class="code-line">  width: 100%;</span>
+<span class="code-line">  height: 100%;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.wheel {</span>
+<span class="code-line">  background: radial-gradient(100% 100% at center,hsla(0,0%,60%,0) 47.8%,hsl(0,0%,60%) 48%);</span>
+<span class="code-line">  z-index: 2;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster {</span>
+<span class="code-line">  animation: hamster var(--dur) ease-in-out infinite;</span>
+<span class="code-line">  top: 50%;</span>
+<span class="code-line">  left: calc(50% - 3.5em);</span>
+<span class="code-line">  width: 7em;</span>
+<span class="code-line">  height: 3.75em;</span>
+<span class="code-line">  transform: rotate(4deg) translate(-0.8em,1.85em);</span>
+<span class="code-line">  transform-origin: 50% 0;</span>
+<span class="code-line">  z-index: 1;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__head {</span>
+<span class="code-line">  animation: hamsterHead var(--dur) ease-in-out infinite;</span>
+<span class="code-line">  background: hsl(30,90%,55%);</span>
+<span class="code-line">  border-radius: 70% 30% 0 100% / 40% 25% 25% 60%;</span>
+<span class="code-line">  box-shadow: 0 -0.25em 0 hsl(30,90%,80%) inset,</span>
+<span class="code-line">      0.75em -1.55em 0 hsl(30,90%,90%) inset;</span>
+<span class="code-line">  top: 0;</span>
+<span class="code-line">  left: -2em;</span>
+<span class="code-line">  width: 2.75em;</span>
+<span class="code-line">  height: 2.5em;</span>
+<span class="code-line">  transform-origin: 100% 50%;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__ear {</span>
+<span class="code-line">  animation: hamsterEar var(--dur) ease-in-out infinite;</span>
+<span class="code-line">  background: hsl(0,90%,85%);</span>
+<span class="code-line">  border-radius: 50%;</span>
+<span class="code-line">  box-shadow: -0.25em 0 hsl(30,90%,55%) inset;</span>
+<span class="code-line">  top: -0.25em;</span>
+<span class="code-line">  right: -0.25em;</span>
+<span class="code-line">  width: 0.75em;</span>
+<span class="code-line">  height: 0.75em;</span>
+<span class="code-line">  transform-origin: 50% 75%;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__eye {</span>
+<span class="code-line">  animation: hamsterEye var(--dur) linear infinite;</span>
+<span class="code-line">  background-color: hsl(0,0%,0%);</span>
+<span class="code-line">  border-radius: 50%;</span>
+<span class="code-line">  top: 0.375em;</span>
+<span class="code-line">  left: 1.25em;</span>
+<span class="code-line">  width: 0.5em;</span>
+<span class="code-line">  height: 0.5em;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__nose {</span>
+<span class="code-line">  background: hsl(0,90%,75%);</span>
+<span class="code-line">  border-radius: 35% 65% 85% 15% / 70% 50% 50% 30%;</span>
+<span class="code-line">  top: 0.75em;</span>
+<span class="code-line">  left: 0;</span>
+<span class="code-line">  width: 0.2em;</span>
+<span class="code-line">  height: 0.25em;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__body {</span>
+<span class="code-line">  animation: hamsterBody var(--dur) ease-in-out infinite;</span>
+<span class="code-line">  background: hsl(30,90%,90%);</span>
+<span class="code-line">  border-radius: 50% 30% 50% 30% / 15% 60% 40% 40%;</span>
+<span class="code-line">  box-shadow: 0.1em 0.75em 0 hsl(30,90%,55%) inset,</span>
+<span class="code-line">      0.15em -0.5em 0 hsl(30,90%,80%) inset;</span>
+<span class="code-line">  top: 0.25em;</span>
+<span class="code-line">  left: 2em;</span>
+<span class="code-line">  width: 4.5em;</span>
+<span class="code-line">  height: 3em;</span>
+<span class="code-line">  transform-origin: 17% 50%;</span>
+<span class="code-line">  transform-style: preserve-3d;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__limb--fr,</span>
+<span class="code-line">.hamster__limb--fl {</span>
+<span class="code-line">  clip-path: polygon(0 0,100% 0,70% 80%,60% 100%,0% 100%,40% 80%);</span>
+<span class="code-line">  top: 2em;</span>
+<span class="code-line">  left: 0.5em;</span>
+<span class="code-line">  width: 1em;</span>
+<span class="code-line">  height: 1.5em;</span>
+<span class="code-line">  transform-origin: 50% 0;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__limb--fr {</span>
+<span class="code-line">  animation: hamsterFRLimb var(--dur) linear infinite;</span>
+<span class="code-line">  background: linear-gradient(hsl(30,90%,80%) 80%,hsl(0,90%,75%) 80%);</span>
+<span class="code-line">  transform: rotate(15deg) translateZ(-1px);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__limb--fl {</span>
+<span class="code-line">  animation: hamsterFLLimb var(--dur) linear infinite;</span>
+<span class="code-line">  background: linear-gradient(hsl(30,90%,90%) 80%,hsl(0,90%,85%) 80%);</span>
+<span class="code-line">  transform: rotate(15deg);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__limb--br,</span>
+<span class="code-line">.hamster__limb--bl {</span>
+<span class="code-line">  border-radius: 0.75em 0.75em 0 0;</span>
+<span class="code-line">  clip-path: polygon(0 0,100% 0,100% 30%,70% 90%,70% 100%,30% 100%,40% 90%,0% 30%);</span>
+<span class="code-line">  top: 1em;</span>
+<span class="code-line">  left: 2.8em;</span>
+<span class="code-line">  width: 1.5em;</span>
+<span class="code-line">  height: 2.5em;</span>
+<span class="code-line">  transform-origin: 50% 30%;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__limb--br {</span>
+<span class="code-line">  animation: hamsterBRLimb var(--dur) linear infinite;</span>
+<span class="code-line">  background: linear-gradient(hsl(30,90%,80%) 90%,hsl(0,90%,75%) 90%);</span>
+<span class="code-line">  transform: rotate(-25deg) translateZ(-1px);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__limb--bl {</span>
+<span class="code-line">  animation: hamsterBLLimb var(--dur) linear infinite;</span>
+<span class="code-line">  background: linear-gradient(hsl(30,90%,90%) 90%,hsl(0,90%,85%) 90%);</span>
+<span class="code-line">  transform: rotate(-25deg);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.hamster__tail {</span>
+<span class="code-line">  animation: hamsterTail var(--dur) linear infinite;</span>
+<span class="code-line">  background: hsl(0,90%,85%);</span>
+<span class="code-line">  border-radius: 0.25em 50% 50% 0.25em;</span>
+<span class="code-line">  box-shadow: 0 -0.2em 0 hsl(0,90%,75%) inset;</span>
+<span class="code-line">  top: 1.5em;</span>
+<span class="code-line">  right: -0.5em;</span>
+<span class="code-line">  width: 1em;</span>
+<span class="code-line">  height: 0.5em;</span>
+<span class="code-line">  transform: rotate(30deg) translateZ(-1px);</span>
+<span class="code-line">  transform-origin: 0.25em 0.25em;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.spoke {</span>
+<span class="code-line">  animation: spoke var(--dur) linear infinite;</span>
+<span class="code-line">  background: radial-gradient(100% 100% at center,hsl(0,0%,60%) 4.8%,hsla(0,0%,60%,0) 5%),</span>
+<span class="code-line">      linear-gradient(hsla(0,0%,55%,0) 46.9%,hsl(0,0%,65%) 47% 52.9%,hsla(0,0%,65%,0) 53%) 50% 50% / 99% 99% no-repeat;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">/* Animations */</span>
+<span class="code-line">@keyframes hamster {</span>
+<span class="code-line">  from, to {</span>
+<span class="code-line">    transform: rotate(4deg) translate(-0.8em,1.85em);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  50% {</span>
+<span class="code-line">    transform: rotate(0) translate(-0.8em,1.85em);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes hamsterHead {</span>
+<span class="code-line">  from, 25%, 50%, 75%, to {</span>
+<span class="code-line">    transform: rotate(0);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  12.5%, 37.5%, 62.5%, 87.5% {</span>
+<span class="code-line">    transform: rotate(8deg);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes hamsterEye {</span>
+<span class="code-line">  from, 90%, to {</span>
+<span class="code-line">    transform: scaleY(1);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  95% {</span>
+<span class="code-line">    transform: scaleY(0);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes hamsterEar {</span>
+<span class="code-line">  from, 25%, 50%, 75%, to {</span>
+<span class="code-line">    transform: rotate(0);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  12.5%, 37.5%, 62.5%, 87.5% {</span>
+<span class="code-line">    transform: rotate(12deg);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes hamsterBody {</span>
+<span class="code-line">  from, 25%, 50%, 75%, to {</span>
+<span class="code-line">    transform: rotate(0);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  12.5%, 37.5%, 62.5%, 87.5% {</span>
+<span class="code-line">    transform: rotate(-2deg);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes hamsterFRLimb {</span>
+<span class="code-line">  from, 25%, 50%, 75%, to {</span>
+<span class="code-line">    transform: rotate(50deg) translateZ(-1px);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  12.5%, 37.5%, 62.5%, 87.5% {</span>
+<span class="code-line">    transform: rotate(-30deg) translateZ(-1px);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes hamsterFLLimb {</span>
+<span class="code-line">  from, 25%, 50%, 75%, to {</span>
+<span class="code-line">    transform: rotate(-30deg);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  12.5%, 37.5%, 62.5%, 87.5% {</span>
+<span class="code-line">    transform: rotate(50deg);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes hamsterBRLimb {</span>
+<span class="code-line">  from, 25%, 50%, 75%, to {</span>
+<span class="code-line">    transform: rotate(-60deg) translateZ(-1px);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  12.5%, 37.5%, 62.5%, 87.5% {</span>
+<span class="code-line">    transform: rotate(20deg) translateZ(-1px);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes hamsterBLLimb {</span>
+<span class="code-line">  from, 25%, 50%, 75%, to {</span>
+<span class="code-line">    transform: rotate(20deg);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  12.5%, 37.5%, 62.5%, 87.5% {</span>
+<span class="code-line">    transform: rotate(-60deg);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes hamsterTail {</span>
+<span class="code-line">  from, 25%, 50%, 75%, to {</span>
+<span class="code-line">    transform: rotate(30deg) translateZ(-1px);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  12.5%, 37.5%, 62.5%, 87.5% {</span>
+<span class="code-line">    transform: rotate(10deg) translateZ(-1px);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes spoke {</span>
+<span class="code-line">  from {</span>
+<span class="code-line">    transform: rotate(0);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  to {</span>
+<span class="code-line">    transform: rotate(-1turn);</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span></pre>
+                </div>
+            </div>
+
+            <!-- كود 5: زر تعلم المزيد -->
+            <div class="code-card" id="code5">
+                <div class="card-header">
+                    <div class="card-title">5. زر تعلم المزيد</div>
+                    <div class="card-actions">
+                        <button class="copy-btn" data-code="code5-html"><i class="far fa-copy"></i></button>
+                        <button class="copy-btn" data-code="code5-css"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="card-preview">
+                    <button class="learn-more">
+                        <span class="circle" aria-hidden="true">
+                        <span class="icon arrow"></span>
+                        </span>
+                        <span class="button-text">Learn More</span>
+                    </button>
+                </div>
+                <div class="code-tabs">
+                    <div class="code-tab active" data-tab="code5-html">HTML</div>
+                    <div class="code-tab" data-tab="code5-css">CSS</div>
+                </div>
+                <div class="code-content">
+                    <pre class="code-block active" id="code5-html"><span class="code-line">&lt;button class="learn-more"&gt;</span>
+<span class="code-line">  &lt;span class="circle" aria-hidden="true"&gt;</span>
+<span class="code-line">  &lt;span class="icon arrow"&gt;&lt;/span&gt;</span>
+<span class="code-line">  &lt;/span&gt;</span>
+<span class="code-line">  &lt;span class="button-text"&gt;Learn More&lt;/span&gt;</span>
+<span class="code-line">&lt;/button&gt;</span></pre>
+                    <pre class="code-block" id="code5-css"><span class="code-line">button {</span>
+<span class="code-line">  position: relative;</span>
+<span class="code-line">  display: inline-block;</span>
+<span class="code-line">  cursor: pointer;</span>
+<span class="code-line">  outline: none;</span>
+<span class="code-line">  border: 0;</span>
+<span class="code-line">  vertical-align: middle;</span>
+<span class="code-line">  text-decoration: none;</span>
+<span class="code-line">  background: transparent;</span>
+<span class="code-line">  padding: 0;</span>
+<span class="code-line">  font-size: inherit;</span>
+<span class="code-line">  font-family: inherit;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button.learn-more {</span>
+<span class="code-line">  width: 12rem;</span>
+<span class="code-line">  height: auto;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button.learn-more .circle {</span>
+<span class="code-line">  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);</span>
+<span class="code-line">  position: relative;</span>
+<span class="code-line">  display: block;</span>
+<span class="code-line">  margin: 0;</span>
+<span class="code-line">  width: 3rem;</span>
+<span class="code-line">  height: 3rem;</span>
+<span class="code-line">  background: #282936;</span>
+<span class="code-line">  border-radius: 1.625rem;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button.learn-more .circle .icon {</span>
+<span class="code-line">  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  top: 0;</span>
+<span class="code-line">  bottom: 0;</span>
+<span class="code-line">  margin: auto;</span>
+<span class="code-line">  background: #fff;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button.learn-more .circle .icon.arrow {</span>
+<span class="code-line">  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);</span>
+<span class="code-line">  left: 0.625rem;</span>
+<span class="code-line">  width: 1.125rem;</span>
+<span class="code-line">  height: 0.125rem;</span>
+<span class="code-line">  background: none;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button.learn-more .circle .icon.arrow::before {</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  content: "";</span>
+<span class="code-line">  top: -0.29rem;</span>
+<span class="code-line">  right: 0.0625rem;</span>
+<span class="code-line">  width: 0.625rem;</span>
+<span class="code-line">  height: 0.625rem;</span>
+<span class="code-line">  border-top: 0.125rem solid #fff;</span>
+<span class="code-line">  border-right: 0.125rem solid #fff;</span>
+<span class="code-line">  transform: rotate(45deg);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button.learn-more .button-text {</span>
+<span class="code-line">  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  top: 0;</span>
+<span class="code-line">  left: 0;</span>
+<span class="code-line">  right: 0;</span>
+<span class="code-line">  bottom: 0;</span>
+<span class="code-line">  padding: 0.75rem 0;</span>
+<span class="code-line">  margin: 0 0 0 1.85rem;</span>
+<span class="code-line">  color: #282936;</span>
+<span class="code-line">  font-weight: 700;</span>
+<span class="code-line">  line-height: 1.6;</span>
+<span class="code-line">  text-align: center;</span>
+<span class="code-line">  text-transform: uppercase;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button:hover .circle {</span>
+<span class="code-line">  width: 100%;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button:hover .circle .icon.arrow {</span>
+<span class="code-line">  background: #fff;</span>
+<span class="code-line">  transform: translate(1rem, 0);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">button:hover .button-text {</span>
+<span class="code-line">  color: #fff;</span>
+<span class="code-line">}</span></pre>
+                </div>
+            </div>
+
+            <!-- كود 6: بطاقة بتأثيرات حركية -->
+            <div class="code-card" id="code6">
+                <div class="card-header">
+                    <div class="card-title">6. بطاقة بتأثيرات حركية</div>
+                    <div class="card-actions">
+                        <button class="copy-btn" data-code="code6-html"><i class="far fa-copy"></i></button>
+                        <button class="copy-btn" data-code="code6-css"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="card-preview">
+                    <div class="card">
+                        <div class="content">
+                            <div class="back">
+                                <div class="back-content">
+                                    <svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px" fill="#ffffff">
+                                        <path d="M20.84375 0.03125C20.191406 0.0703125 19.652344 0.425781 19.21875 1.53125C18.988281 2.117188 18.5 3.558594 18.03125 4.9375C17.792969 5.636719 17.570313 6.273438 17.40625 6.75C17.390625 6.796875 17.414063 6.855469 17.40625 6.90625C17.398438 6.925781 17.351563 6.949219 17.34375 6.96875L17.25 7.25C18.566406 7.65625 19.539063 8.058594 19.625 8.09375C22.597656 9.21875 28.351563 11.847656 33.28125 16.78125C38.5 22 41.183594 28.265625 42.09375 30.71875C42.113281 30.761719 42.375 31.535156 42.75 32.84375C42.757813 32.839844 42.777344 32.847656 42.78125 32.84375C43.34375 32.664063 44.953125 32.09375 46.3125 31.625C47.109375 31.351563 47.808594 31.117188 48.15625 31C49.003906 30.714844 49.542969 30.292969 49.8125 29.6875C50.074219 29.109375 50.066406 28.429688 49.75 27.6875C49.605469 27.347656 49.441406 26.917969 49.25 26.4375C47.878906 23.007813 45.007813 15.882813 39.59375 10.46875C33.613281 4.484375 25.792969 1.210938 22.125 0.21875C21.648438 0.0898438 21.234375 0.0078125 20.84375 0.03125 Z M 16.46875 9.09375L0.0625 48.625C-0.09375 48.996094 -0.00390625 49.433594 0.28125 49.71875C0.472656 49.910156 0.738281 50 1 50C1.128906 50 1.253906 49.988281 1.375 49.9375L40.90625 33.59375C40.523438 32.242188 40.222656 31.449219 40.21875 31.4375C39.351563 29.089844 36.816406 23.128906 31.875 18.1875C27.035156 13.34375 21.167969 10.804688 18.875 9.9375C18.84375 9.925781 17.8125 9.5 16.46875 9.09375 Z M 17 16C19.761719 16 22 18.238281 22 21C22 23.761719 19.761719 26 17 26C15.140625 26 13.550781 24.972656 12.6875 23.46875L15.6875 16.1875C16.101563 16.074219 16.550781 16 17 16 Z M 31 22C32.65625 22 34 23.34375 34 25C34 25.917969 33.585938 26.730469 32.9375 27.28125L32.90625 27.28125C33.570313 27.996094 34 28.949219 34 30C34 32.210938 32.210938 34 30 34C27.789063 34 26 32.210938 26 30C26 28.359375 26.996094 26.960938 28.40625 26.34375L28.3125 26.3125C28.117188 25.917969 28 25.472656 28 25C28 23.34375 29.34375 22 31 22 Z M 21 32C23.210938 32 25 33.789063 25 36C25 36.855469 24.710938 37.660156 24.25 38.3125L20.3125 39.9375C18.429688 39.609375 17 37.976563 17 36C17 33.789063 18.789063 32 21 32 Z M 9 34C10.65625 34 12 35.34375 12 37C12 38.65625 10.65625 40 9 40C7.34375 40 6 38.65625 6 37C6 35.34375 7.34375 34 9 34 Z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-tabs">
+                    <div class="code-tab active" data-tab="code6-html">HTML</div>
+                    <div class="code-tab" data-tab="code6-css">CSS</div>
+                </div>
+                <div class="code-content">
+                    <pre class="code-block active" id="code6-html"><span class="code-line">&lt;div class="card"&gt;</span>
+<span class="code-line">  &lt;div class="content"&gt;</span>
+<span class="code-line">    &lt;div class="back"&gt;</span>
+<span class="code-line">      &lt;div class="back-content"&gt;</span>
+<span class="code-line">        &lt;svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px" fill="#ffffff"&gt;</span>
+<span class="code-line">          &lt;path d="M20.84375 0.03125C20.191406 0.0703125 19.652344 0.425781 19.21875 1.53125C18.988281 2.117188 18.5 3.558594 18.03125 4.9375C17.792969 5.636719 17.570313 6.273438 17.40625 6.75C17.390625 6.796875 17.414063 6.855469 17.40625 6.90625C17.398438 6.925781 17.351563 6.949219 17.34375 6.96875L17.25 7.25C18.566406 7.65625 19.539063 8.058594 19.625 8.09375C22.597656 9.21875 28.351563 11.847656 33.28125 16.78125C38.5 22 41.183594 28.265625 42.09375 30.71875C42.113281 30.761719 42.375 31.535156 42.75 32.84375C42.757813 32.839844 42.777344 32.847656 42.78125 32.84375C43.34375 32.664063 44.953125 32.09375 46.3125 31.625C47.109375 31.351563 47.808594 31.117188 48.15625 31C49.003906 30.714844 49.542969 30.292969 49.8125 29.6875C50.074219 29.109375 50.066406 28.429688 49.75 27.6875C49.605469 27.347656 49.441406 26.917969 49.25 26.4375C47.878906 23.007813 45.007813 15.882813 39.59375 10.46875C33.613281 4.484375 25.792969 1.210938 22.125 0.21875C21.648438 0.0898438 21.234375 0.0078125 20.84375 0.03125 Z M 16.46875 9.09375L0.0625 48.625C-0.09375 48.996094 -0.00390625 49.433594 0.28125 49.71875C0.472656 49.910156 0.738281 50 1 50C1.128906 50 1.253906 49.988281 1.375 49.9375L40.90625 33.59375C40.523438 32.242188 40.222656 31.449219 40.21875 31.4375C39.351563 29.089844 36.816406 23.128906 31.875 18.1875C27.035156 13.34375 21.167969 10.804688 18.875 9.9375C18.84375 9.925781 17.8125 9.5 16.46875 9.09375 Z M 17 16C19.761719 16 22 18.238281 22 21C22 23.761719 19.761719 26 17 26C15.140625 26 13.550781 24.972656 12.6875 23.46875L15.6875 16.1875C16.101563 16.074219 16.550781 16 17 16 Z M 31 22C32.65625 22 34 23.34375 34 25C34 25.917969 33.585938 26.730469 32.9375 27.28125L32.90625 27.28125C33.570313 27.996094 34 28.949219 34 30C34 32.210938 32.210938 34 30 34C27.789063 34 26 32.210938 26 30C26 28.359375 26.996094 26.960938 28.40625 26.34375L28.3125 26.3125C28.117188 25.917969 28 25.472656 28 25C28 23.34375 29.34375 22 31 22 Z M 21 32C23.210938 32 25 33.789063 25 36C25 36.855469 24.710938 37.660156 24.25 38.3125L20.3125 39.9375C18.429688 39.609375 17 37.976563 17 36C17 33.789063 18.789063 32 21 32 Z M 9 34C10.65625 34 12 35.34375 12 37C12 38.65625 10.65625 40 9 40C7.34375 40 6 38.65625 6 37C6 35.34375 7.34375 34 9 34 Z"&gt;&lt;/path&gt;</span>
+<span class="code-line">        &lt;/svg&gt;</span>
+<span class="code-line">      &lt;/div&gt;</span>
+<span class="code-line">    &lt;/div&gt;</span>
+<span class="code-line">  &lt;/div&gt;</span>
+<span class="code-line">&lt;/div&gt;</span></pre>
+                    <pre class="code-block" id="code6-css"><span class="code-line">.card {</span>
+<span class="code-line">  position: relative;</span>
+<span class="code-line">  width: 190px;</span>
+<span class="code-line">  height: 254px;</span>
+<span class="code-line">  background-color: #000;</span>
+<span class="code-line">  display: flex;</span>
+<span class="code-line">  flex-direction: column;</span>
+<span class="code-line">  justify-content: end;</span>
+<span class="code-line">  padding: 12px;</span>
+<span class="code-line">  gap: 12px;</span>
+<span class="code-line">  border-radius: 8px;</span>
+<span class="code-line">  cursor: pointer;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.card::before {</span>
+<span class="code-line">  content: '';</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  inset: 0;</span>
+<span class="code-line">  left: -5px;</span>
+<span class="code-line">  margin: auto;</span>
+<span class="code-line">  width: 200px;</span>
+<span class="code-line">  height: 264px;</span>
+<span class="code-line">  border-radius: 10px;</span>
+<span class="code-line">  background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100% );</span>
+<span class="code-line">  z-index: -10;</span>
+<span class="code-line">  pointer-events: none;</span>
+<span class="code-line">  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.card::after {</span>
+<span class="code-line">  content: "";</span>
+<span class="code-line">  z-index: -1;</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  inset: 0;</span>
+<span class="code-line">  background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100% );</span>
+<span class="code-line">  transform: translate3d(0, 0, 0) scale(0.95);</span>
+<span class="code-line">  filter: blur(20px);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.heading {</span>
+<span class="code-line">  font-size: 20px;</span>
+<span class="code-line">  text-transform: capitalize;</span>
+<span class="code-line">  font-weight: 700;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.card p:not(.heading) {</span>
+<span class="code-line">  font-size: 14px;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.card p:last-child {</span>
+<span class="code-line">  color: #e81cff;</span>
+<span class="code-line">  font-weight: 600;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.card:hover::after {</span>
+<span class="code-line">  filter: blur(30px);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.card:hover::before {</span>
+<span class="code-line">  transform: rotate(-90deg) scaleX(1.34) scaleY(0.77);</span>
+<span class="code-line">}</span></pre>
+                </div>
+            </div>
+
+            <!-- كود 7: شريط تقدم متحرك -->
+            <div class="code-card" id="code7">
+                <div class="card-header">
+                    <div class="card-title">7. شريط تقدم متحرك</div>
+                    <div class="card-actions">
+                        <button class="copy-btn" data-code="code7-html"><i class="far fa-copy"></i></button>
+                        <button class="copy-btn" data-code="code7-css"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="card-preview">
+                    <div class="progress-container">
+                        <div class="progress-bar"></div>
+                    </div>
+                </div>
+                <div class="code-tabs">
+                    <div class="code-tab active" data-tab="code7-html">HTML</div>
+                    <div class="code-tab" data-tab="code7-css">CSS</div>
+                </div>
+                <div class="code-content">
+                    <pre class="code-block active" id="code7-html"><span class="code-line">&lt;div class="progress-container"&gt;</span>
+<span class="code-line">  &lt;div class="progress-bar"&gt;&lt;/div&gt;</span>
+<span class="code-line">&lt;/div&gt;</span></pre>
+                    <pre class="code-block" id="code7-css"><span class="code-line">.progress-container {</span>
+<span class="code-line">  width: 100%;</span>
+<span class="code-line">  height: 20px;</span>
+<span class="code-line">  background-color: #f0f0f0;</span>
+<span class="code-line">  border-radius: 10px;</span>
+<span class="code-line">  overflow: hidden;</span>
+<span class="code-line">  position: relative;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.progress-bar {</span>
+<span class="code-line">  height: 100%;</span>
+<span class="code-line">  width: 0;</span>
+<span class="code-line">  background: linear-gradient(90deg, #ff8a00, #e52e71);</span>
+<span class="code-line">  border-radius: 10px;</span>
+<span class="code-line">  animation: progress 3s ease-in-out infinite;</span>
+<span class="code-line">  background-size: 200% 100%;</span>
+<span class="code-line">  animation-direction: alternate;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes progress {</span>
+<span class="code-line">  0% {</span>
+<span class="code-line">    width: 0%;</span>
+<span class="code-line">    background-position: 0% 50%;</span>
+<span class="code-line">  }</span>
+<span class="code-line">  100% {</span>
+<span class="code-line">    width: 100%;</span>
+<span class="code-line">    background-position: 100% 50%;</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span></pre>
+                </div>
+            </div>
+
+            <!-- كود 8: زر بحدود متحركة -->
+            <div class="code-card" id="code8">
+                <div class="card-header">
+                    <div class="card-title">8. زر بحدود متحركة</div>
+                    <div class="card-actions">
+                        <button class="copy-btn" data-code="code8-html"><i class="far fa-copy"></i></button>
+                        <button class="copy-btn" data-code="code8-css"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="card-preview">
+                    <button class="border-button">
+                        <span>Hover Me</span>
+                    </button>
+                </div>
+                <div class="code-tabs">
+                    <div class="code-tab active" data-tab="code8-html">HTML</div>
+                    <div class="code-tab" data-tab="code8-css">CSS</div>
+                </div>
+                <div class="code-content">
+                    <pre class="code-block active" id="code8-html"><span class="code-line">&lt;button class="border-button"&gt;</span>
+<span class="code-line">  &lt;span&gt;Hover Me&lt;/span&gt;</span>
+<span class="code-line">&lt;/button&gt;</span></pre>
+                    <pre class="code-block" id="code8-css"><span class="code-line">.border-button {</span>
+<span class="code-line">  position: relative;</span>
+<span class="code-line">  padding: 15px 30px;</span>
+<span class="code-line">  color: #fff;</span>
+<span class="code-line">  font-size: 18px;</span>
+<span class="code-line">  font-weight: bold;</span>
+<span class="code-line">  text-transform: uppercase;</span>
+<span class="code-line">  background: transparent;</span>
+<span class="code-line">  border: none;</span>
+<span class="code-line">  cursor: pointer;</span>
+<span class="code-line">  overflow: hidden;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.border-button::before,</span>
+<span class="code-line">.border-button::after {</span>
+<span class="code-line">  content: '';</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  width: 100%;</span>
+<span class="code-line">  height: 2px;</span>
+<span class="code-line">  background: #fff;</span>
+<span class="code-line">  transition: all 0.3s;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.border-button::before {</span>
+<span class="code-line">  top: 0;</span>
+<span class="code-line">  left: 0;</span>
+<span class="code-line">  transform: translateX(-100%);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.border-button::after {</span>
+<span class="code-line">  bottom: 0;</span>
+<span class="code-line">  right: 0;</span>
+<span class="code-line">  transform: translateX(100%);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.border-button:hover::before,</span>
+<span class="code-line">.border-button:hover::after {</span>
+<span class="code-line">  transform: translateX(0);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.border-button span::before,</span>
+<span class="code-line">.border-button span::after {</span>
+<span class="code-line">  content: '';</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  width: 2px;</span>
+<span class="code-line">  height: 100%;</span>
+<span class="code-line">  background: #fff;</span>
+<span class="code-line">  transition: all 0.3s;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.border-button span::before {</span>
+<span class="code-line">  top: 0;</span>
+<span class="code-line">  left: 0;</span>
+<span class="code-line">  transform: translateY(-100%);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.border-button span::after {</span>
+<span class="code-line">  bottom: 0;</span>
+<span class="code-line">  right: 0;</span>
+<span class="code-line">  transform: translateY(100%);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.border-button:hover span::before,</span>
+<span class="code-line">.border-button:hover span::after {</span>
+<span class="code-line">  transform: translateY(0);</span>
+<span class="code-line">}</span></pre>
+                </div>
+            </div>
+
+            <!-- كود 9: تأثير كتابة نص -->
+            <div class="code-card" id="code9">
+                <div class="card-header">
+                    <div class="card-title">9. تأثير كتابة نص</div>
+                    <div class="card-actions">
+                        <button class="copy-btn" data-code="code9-html"><i class="far fa-copy"></i></button>
+                        <button class="copy-btn" data-code="code9-css"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="card-preview">
+                    <div class="typing-effect">Hello, World!</div>
+                </div>
+                <div class="code-tabs">
+                    <div class="code-tab active" data-tab="code9-html">HTML</div>
+                    <div class="code-tab" data-tab="code9-css">CSS</div>
+                </div>
+                <div class="code-content">
+                    <pre class="code-block active" id="code9-html"><span class="code-line">&lt;div class="typing-effect"&gt;Hello, World!&lt;/div&gt;</span></pre>
+                    <pre class="code-block" id="code9-css"><span class="code-line">.typing-effect {</span>
+<span class="code-line">  font-size: 24px;</span>
+<span class="code-line">  font-family: monospace;</span>
+<span class="code-line">  white-space: nowrap;</span>
+<span class="code-line">  overflow: hidden;</span>
+<span class="code-line">  border-right: 3px solid;</span>
+<span class="code-line">  width: 0;</span>
+<span class="code-line">  animation: typing 2s steps(20) forwards, blink 0.5s step-end infinite alternate;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes typing {</span>
+<span class="code-line">  from { width: 0 }</span>
+<span class="code-line">  to { width: 100% }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">@keyframes blink {</span>
+<span class="code-line">  50% { border-color: transparent }</span>
+<span class="code-line">}</span></pre>
+                </div>
+            </div>
+
+            <!-- كود 10: زر ثلاثي الأبعاد -->
+            <div class="code-card" id="code10">
+                <div class="card-header">
+                    <div class="card-title">10. زر ثلاثي الأبعاد</div>
+                    <div class="card-actions">
+                        <button class="copy-btn" data-code="code10-html"><i class="far fa-copy"></i></button>
+                        <button class="copy-btn" data-code="code10-css"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                <div class="card-preview">
+                    <button class="btn-3d">Click Me</button>
+                </div>
+                <div class="code-tabs">
+                    <div class="code-tab active" data-tab="code10-html">HTML</div>
+                    <div class="code-tab" data-tab="code10-css">CSS</div>
+                </div>
+                <div class="code-content">
+                    <pre class="code-block active" id="code10-html"><span class="code-line">&lt;button class="btn-3d"&gt;Click Me&lt;/button&gt;</span></pre>
+                    <pre class="code-block" id="code10-css"><span class="code-line">.btn-3d {</span>
+<span class="code-line">  position: relative;</span>
+<span class="code-line">  padding: 15px 30px;</span>
+<span class="code-line">  font-size: 18px;</span>
+<span class="code-line">  color: white;</span>
+<span class="code-line">  background: #6c5ce7;</span>
+<span class="code-line">  border: none;</span>
+<span class="code-line">  border-radius: 5px;</span>
+<span class="code-line">  cursor: pointer;</span>
+<span class="code-line">  transform-style: preserve-3d;</span>
+<span class="code-line">  transition: all 0.3s;</span>
+<span class="code-line">  box-shadow: 0 10px 0 #5649c0, 0 15px 20px rgba(0,0,0,0.3);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.btn-3d:active {</span>
+<span class="code-line">  transform: translateY(5px);</span>
+<span class="code-line">  box-shadow: 0 5px 0 #5649c0, 0 10px 15px rgba(0,0,0,0.3);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line">.btn-3d::before {</span>
+<span class="code-line">  content: '';</span>
+<span class="code-line">  position: absolute;</span>
+<span class="code-line">  width: 100%;</span>
+<span class="code-line">  height: 100%;</span>
+<span class="code-line">  background: #5649c0;</span>
+<span class="code-line">  border-radius: 5px;</span>
+<span class="code-line">  top: 0;</span>
+<span class="code-line">  left: 0;</span>
+<span class="code-line">  transform: translateZ(-1px);</span>
+<span class="code-line">}</span></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="copied-notification">
+        <i class="fas fa-check-circle"></i> تم النسخ بنجاح!
+    </div>
+
+    <script>
+        // تبديل التبويبات
+        document.querySelectorAll('.code-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                const codeContent = tab.closest('.code-content');
+                
+                // إخفاء جميع الكتل
+                codeContent.querySelectorAll('.code-block').forEach(block => {
+                    block.classList.remove('active');
+                });
+                
+                // إظهار الكتلة المحددة
+                document.getElementById(tabId).classList.add('active');
+                
+                // تحديث التبويبات النشطة
+                tab.closest('.code-tabs').querySelectorAll('.code-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                tab.classList.add('active');
+            });
+        });
+
+        // نسخ الأكواد
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const codeId = btn.getAttribute('data-code');
+                const codeBlock = document.getElementById(codeId);
+                const textToCopy = codeBlock.textContent;
+                
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showCopiedNotification();
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    // Fallback for browsers that don't support clipboard API
+                    const textarea = document.createElement('textarea');
+                    textarea.value = textToCopy;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    showCopiedNotification();
+                });
+            });
+        });
+
+        // عرض إشعار النسخ
+        function showCopiedNotification() {
+            const notification = document.querySelector('.copied-notification');
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        // تحسين عرض الأسطر البرمجية
+        document.querySelectorAll('.code-block').forEach(block => {
+            const lines = block.innerHTML.split('\n');
+            block.innerHTML = lines.map(line => {
+                if (line.trim() === '') return '<span class="code-line"></span>';
+                return `<span class="code-line">${line}</span>`;
+            }).join('');
+        });
+    </script>
+</body>
+</html>
